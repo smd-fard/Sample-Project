@@ -1,0 +1,34 @@
+import { randomUUID } from 'crypto';
+import { Body, Get, HttpCode, JsonController, Param, Post } from 'routing-controllers';
+import { Service } from 'typedi';
+
+import { ApiEnvelope, ApiResult } from '../common/http/ApiResult';
+import { validateDto } from '../common/http/validateDto';
+// import { ${Verb}${Resource}ContextBuilder } from '../contexts/${resource}/${Verb}${Resource}Context';
+// import { ${Verb}${Resource}Request, ${Verb}${Resource}RequestSchema } from '../dtos/${resource}/requests/${Verb}${Resource}Request';
+import { ${Resource}Response } from '../dtos/${resource}/responses/${Resource}Response';
+import { ${Entity} } from '../models/${Entity}';
+import { ${Resource}Service } from '../services/${Resource}Service';
+import { I${Resource}Controller } from './interfaces/I${Resource}Controller';
+
+/**
+ * HTTP layer for ${resource-plural}. Validates the body, builds a context,
+ * delegates to the service, then maps the model to a response DTO inside the
+ * uniform envelope.
+ */
+@Service()
+@JsonController('/${resource-plural}')
+export class ${Resource}Controller implements I${Resource}Controller {
+  constructor(private readonly ${resource}Service: ${Resource}Service) {}
+
+  // endpoints appended by define-controller (controller-method.ts.tmpl)
+
+  private toResponse(${resource}: ${Entity}): ${Resource}Response {
+    return {
+      ${resource}Id: ${resource}.${resource}Id,
+      // name: ${resource}.name,
+      // status: ${resource}.status,
+      createdAt: ${resource}.createdAt,
+    };
+  }
+}

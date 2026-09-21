@@ -1,0 +1,72 @@
+import request from 'supertest';
+import { afterAll, beforeAll, describe, expect, test } from 'vitest';
+
+import {
+  ${Verb}${Resource}Request,
+  ${Verb}${Resource}RequestBuilder,
+} from '../../../src/dtos/${resource}/requests/${Verb}${Resource}Request';
+import { ${Resource}Response } from '../../../src/dtos/${resource}/responses/${Resource}Response';
+import { BaseFunctionalTest } from '../BaseFunctionalTest';
+
+class ${Verb}${Resource}Test extends BaseFunctionalTest {
+  public async testSuccess(): Promise<void> {
+    // 1. setup state — clean store from BaseFunctionalTest.setup()
+
+    // 2. build request
+    const body: ${Verb}${Resource}Request = new ${Verb}${Resource}RequestBuilder()
+      // .setName('Sample')
+      .build();
+
+    // 3. HTTP
+    const response = await request(this.app)
+      .${verb}(${routePath}) // e.g. .post('/api/${resource-plural}'); .get(`/api/${resource-plural}/${id}`)
+      .send(body);
+
+    // 4. envelope
+    expect(response.status).toBe(${OK_OR_CREATED}); // 201 create, 200 read
+    expect(response.body.message).toBeDefined();
+    expect(response.body.errors).toEqual([]);
+
+    // 5. shape
+    const data = response.body.data as ${Resource}Response;
+    expect(data.${resource}Id).toBeDefined();
+  }
+
+  public async testValidationFailure(): Promise<void> {
+    const response = await request(this.app).${verb}(${routePath}).send({}); // omit a required field
+    expect(response.status).toBe(422);
+    expect(response.body.errors[0].field).toBe('<expected-field>');
+  }
+
+  // public async testConflict(): Promise<void> {
+  //   await request(this.app).post('/api/${resource-plural}').send(body);
+  //   const dup = await request(this.app).post('/api/${resource-plural}').send(body);
+  //   expect(dup.status).toBe(409);
+  // }
+
+  // public async testNotFound(): Promise<void> {
+  //   const response = await request(this.app).get('/api/${resource-plural}/missing');
+  //   expect(response.status).toBe(404);
+  //   expect(response.body.errors[0].field).toBe('${resource}Id');
+  // }
+}
+
+describe('${HTTP_VERB} ${routePath}', () => {
+  const t = new ${Verb}${Resource}Test();
+
+  beforeAll(async () => {
+    await t.setup();
+  });
+  afterAll(async () => {
+    await t.teardown();
+  });
+
+  test('testSuccess', async () => {
+    await t.testSuccess();
+  });
+  test('testValidationFailure', async () => {
+    await t.testValidationFailure();
+  });
+  // test('testConflict', async () => { await t.testConflict(); });
+  // test('testNotFound', async () => { await t.testNotFound(); });
+});

@@ -1,0 +1,25 @@
+import { z } from 'zod';
+
+import { BaseBuilder } from '../../../common/dto/BaseBuilder';
+
+/** Schema for the ${verb}-${resource} request body. Server-owned fields
+ * (id, status, createdAt) are intentionally absent. */
+export const ${Verb}${Resource}RequestSchema = z.object({
+  // name: z.string().min(1).max(120),
+  // description: z.string().max(2000).optional(),
+});
+
+export type ${Verb}${Resource}Request = z.infer<typeof ${Verb}${Resource}RequestSchema>;
+
+/** Fluent builder for `${Verb}${Resource}Request` — handy for test fixtures. */
+export class ${Verb}${Resource}RequestBuilder extends BaseBuilder<typeof ${Verb}${Resource}RequestSchema> {
+  constructor() {
+    super(${Verb}${Resource}RequestSchema);
+  }
+
+  // one setter per field
+  // public setName(name: string): this {
+  //   this.data.name = name;
+  //   return this;
+  // }
+}

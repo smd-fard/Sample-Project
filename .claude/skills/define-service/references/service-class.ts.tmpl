@@ -1,0 +1,21 @@
+import { Inject, Service } from 'typedi';
+
+// import { ${Verb}${Resource}Context } from '../contexts/${resource}/${Verb}${Resource}Context';
+// import { ConflictError } from '../common/errors/ConflictError';
+// import { NotFoundError } from '../common/errors/NotFoundError';
+// import { ${Enum} } from '../enums/${Enum}';
+import { ${Entity} } from '../models/${Entity}';
+import { InMemory${Entity}Repository } from '../repositories/InMemory${Entity}Repository';
+import { I${Resource}Service } from './interfaces/I${Resource}Service';
+
+/**
+ * ${Resource} orchestration: enforces business rules, maps contexts to models,
+ * and delegates persistence to the repository. Throws `AppError` subclasses,
+ * which `ErrorHandlerMiddleware` maps to HTTP responses.
+ */
+@Service()
+export class ${Resource}Service implements I${Resource}Service {
+  constructor(@Inject() private readonly ${resource}Repository: InMemory${Entity}Repository) {}
+
+  // methods appended by define-service (service-method.ts.tmpl)
+}

@@ -1,0 +1,36 @@
+// Body verbs import the request DTO; id-only verbs omit this import.
+// import { ${Verb}${Resource}Request } from '../../dtos/${resource}/requests/${Verb}${Resource}Request';
+
+/**
+ * Validated, builder-constructed envelope for a ${verb}-${resource} call. Carries
+ * the validated request and/or path id plus request metadata into the service.
+ */
+export class ${Verb}${Resource}Context {
+  public traceId!: string;
+  // public request!: ${Verb}${Resource}Request;   // body verbs
+  // public ${resource}Id!: string;                // path-param verbs
+}
+
+/** Fluent builder for `${Verb}${Resource}Context`. */
+export class ${Verb}${Resource}ContextBuilder {
+  private readonly context = new ${Verb}${Resource}Context();
+
+  public setTraceId(traceId: string): this {
+    this.context.traceId = traceId;
+    return this;
+  }
+
+  // public setRequest(request: ${Verb}${Resource}Request): this {
+  //   this.context.request = request;
+  //   return this;
+  // }
+
+  // public set${Resource}Id(${resource}Id: string): this {
+  //   this.context.${resource}Id = ${resource}Id;
+  //   return this;
+  // }
+
+  public build(): ${Verb}${Resource}Context {
+    return this.context;
+  }
+}

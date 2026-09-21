@@ -1,0 +1,19 @@
+// --- append to the class body ---
+public async ${verb}(context: ${Verb}${Resource}Context): Promise<${Entity}> {
+  // 1. business-rule checks (throw AppError subclasses on failure)
+  // const existing = await this.${resource}Repository.findByName(context.request.name);
+  // if (existing) {
+  //   throw new ConflictError(`...already exists`).addError('name', 'name already taken');
+  // }
+
+  // 2. map context -> model, set server-owned fields
+  // const ${resource} = new ${Entity}();
+  // ${resource}.name = context.request.name;
+  // ${resource}.status = ${Enum}.ACTIVE;
+
+  // 3. delegate persistence and return the model
+  // return this.${resource}Repository.create(${resource});
+}
+
+// --- and append the signature to interfaces/I${Resource}Service.ts ---
+// ${verb}(context: ${Verb}${Resource}Context): Promise<${Entity}>;

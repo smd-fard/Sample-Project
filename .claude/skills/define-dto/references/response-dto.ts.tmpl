@@ -1,0 +1,27 @@
+import { z } from 'zod';
+
+import { BaseBuilder } from '../../../common/dto/BaseBuilder';
+// import { ${Enum} } from '../../../enums/${Enum}';
+
+/** Schema for a single ${resource}'s response payload. */
+export const ${Resource}ResponseSchema = z.object({
+  ${resource}Id: z.string(),
+  // name: z.string(),
+  // status: z.enum(${Enum}),
+  createdAt: z.string(),
+});
+
+export type ${Resource}Response = z.infer<typeof ${Resource}ResponseSchema>;
+
+/** Fluent builder for `${Resource}Response` — handy for test fixtures. */
+export class ${Resource}ResponseBuilder extends BaseBuilder<typeof ${Resource}ResponseSchema> {
+  constructor() {
+    super(${Resource}ResponseSchema);
+  }
+
+  // one setter per field
+  // public set${Resource}Id(${resource}Id: string): this {
+  //   this.data.${resource}Id = ${resource}Id;
+  //   return this;
+  // }
+}

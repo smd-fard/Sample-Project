@@ -1,0 +1,21 @@
+// --- body verb (e.g. create): append to the class body ---
+@Post()
+@HttpCode(201)
+public async ${verb}(@Body() body: ${Verb}${Resource}Request): Promise<ApiEnvelope<${Resource}Response>> {
+  const request = validateDto(body, ${Verb}${Resource}RequestSchema);
+  const context = new ${Verb}${Resource}ContextBuilder().setTraceId(randomUUID()).setRequest(request).build();
+  const ${resource} = await this.${resource}Service.${verb}(context);
+  return ApiResult.data('${Resource} ${verb}d', this.toResponse(${resource}));
+}
+
+// --- path-param verb (e.g. find): append to the class body ---
+@Get('/:${resource}Id')
+public async ${verb}(@Param('${resource}Id') ${resource}Id: string): Promise<ApiEnvelope<${Resource}Response>> {
+  const context = new ${Verb}${Resource}ContextBuilder().setTraceId(randomUUID()).set${Resource}Id(${resource}Id).build();
+  const ${resource} = await this.${resource}Service.${verb}(context);
+  return ApiResult.data('${Resource} found', this.toResponse(${resource}));
+}
+
+// --- and append the signature to interfaces/I${Resource}Controller.ts ---
+// ${verb}(body: ${Verb}${Resource}Request): Promise<ApiEnvelope<${Resource}Response>>;      // body verb
+// ${verb}(${resource}Id: string): Promise<ApiEnvelope<${Resource}Response>>;                // path-param verb

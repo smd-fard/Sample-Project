@@ -1,0 +1,10 @@
+import { ${Entity} } from '../../models/${Entity}';
+
+/** Data-access contract for ${entity} records. Methods return entities or `null`
+ * — they never throw business errors. */
+export interface ${Entity}Repository {
+  create(${entity}: ${Entity}): Promise<${Entity}>;
+  findById(id: string): Promise<${Entity} | null>;
+  // findByName(name: string): Promise<${Entity} | null>;
+  findAll(): Promise<${Entity}[]>;
+}

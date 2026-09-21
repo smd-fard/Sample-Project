@@ -1,0 +1,12 @@
+// import { ${Enum} } from '../enums/${Enum}';
+
+/**
+ * In-memory ${Entity} record. A plain class (no ORM) — the repository keeps these
+ * in a hashmap. Required fields use `!`, server-optional fields use `?`.
+ */
+export class ${Entity} {
+  ${entity}Id!: string;
+  // name!: string;
+  // status!: ${Enum};
+  createdAt!: string;
+}

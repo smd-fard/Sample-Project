@@ -1,0 +1,44 @@
+import { randomUUID } from 'crypto';
+import { Service } from 'typedi';
+
+// import { ${Enum} } from '../enums/${Enum}';
+import { ${Entity} } from '../models/${Entity}';
+import { ${Entity}Repository } from './interfaces/${Entity}Repository';
+
+/**
+ * Process-local hashmap store for ${entity} records. A `@Service()` singleton.
+ * Clones on read/write so callers can't mutate stored records. Swap for a
+ * DB-backed class later without touching the service (it uses the interface).
+ */
+@Service()
+export class InMemory${Entity}Repository implements ${Entity}Repository {
+  private readonly store = new Map<string, ${Entity}>();
+
+  public async create(${entity}: ${Entity}): Promise<${Entity}> {
+    const created = this.clone(${entity});
+    created.${entity}Id = randomUUID();
+    created.createdAt = new Date().toISOString();
+    this.store.set(created.${entity}Id, created);
+    return this.clone(created);
+  }
+
+  public async findById(id: string): Promise<${Entity} | null> {
+    const ${entity} = this.store.get(id);
+    return ${entity} ? this.clone(${entity}) : null;
+  }
+
+  public async findAll(): Promise<${Entity}[]> {
+    return Array.from(this.store.values())
+      // .filter((${entity}) => ${entity}.status !== ${Enum}.DELETED)
+      .map((${entity}) => this.clone(${entity}));
+  }
+
+  /** Test-support hook: drop all records so suites start from a clean store. */
+  public clear(): void {
+    this.store.clear();
+  }
+
+  private clone(${entity}: ${Entity}): ${Entity} {
+    return Object.assign(new ${Entity}(), ${entity});
+  }
+}
